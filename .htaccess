@@ -1,0 +1,14 @@
+RewriteEngine on
+#RewriteBase /
+
+#index.php/index/index
+
+#RewriteRule ^index.php/(.*)/(.*)$ index.php?c=$1&m=$2 [R]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php/$1 [QSA,PT]
+
+RewriteRule ^index.php/([a-zA-z0-9]*)/([a-zA-z0-9]*)$ index.php?c=$1&m=$2
+
+#RewriteCond %{HTTP_HOST} "http://www.mvc.com"
+#RewriteRule ^(.*)\.htm http://127.0.0.1/$1.html [R]
