@@ -15,11 +15,10 @@ $mysqlCon = [
     'DB_IP'   => 'localhost'
 ];
 
-
 $smartyCon = [
     'left_delimiter'  => '{',
     'right_delimiter' => '}',
-    'template_dir'    => 'Project/View',
-    'compile_dir'     => 'Project/TempCache',
-    'cache_dir'       => 'Project/Cache'
+    'template_dir'    => DIR_URL . "/Project/$block/View",
+    'compile_dir'     => DIR_URL . "/Project/$block/TempCache",
+    'cache_dir'       => DIR_URL . "/Project/$block/Cache"
 ];

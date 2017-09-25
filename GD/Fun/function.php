@@ -7,11 +7,11 @@
  */
 //负责 控制器 和 方法的调用
 
-function imc($control, $method)
+function imc($block, $control, $method)
 {
     $control = $control . 'Controller';
     try {
-        $url = 'Project/Controller/' . $control . '.class.php';
+        $url = DIR_URL . '/Project/' . $block.'/Controller/' . $control . '.class.php';
 
         getErr('file_exists', $url, 'Controller is not found!!');
         require_once($url);
@@ -26,18 +26,20 @@ function imc($control, $method)
         getErrInfo($e->getMessage());
     }
 
-
 }
 
 //负责模型的调用
 function M($name)
 {
+    //将区块引入
+    global $block;
 
     $m = null;
     $GLOBALS['tab'] = $name;
-    //拼接引入
+
+    //文件名称
     $name = $name . 'Model';
-    $url = 'Project/Model/' . $name . '.class.php';
+    $url = DIR_URL . "/Project/$block/Model" . $name . '.class.php';
     try {
         getErr('file_exists', $url, 'modelFile is not found!!');
         require_once($url);
@@ -55,20 +57,20 @@ function M($name)
 //负责调用
 
 //负责视图的调用
-function imv($name)
-{
-    $name = $name . 'View';
-    require_once('Project/View/' . $name . '.class.php');
-    $m = new $name();
-    return $m;
-}
+//function imv($name)
+//{
+//    $name = $name . 'View';
+//    require_once('Project/View/' . $name . '.class.php');
+//    $m = new $name();
+//    return $m;
+//}
 
 //负责第三方类库调用
 function getOrg($url, $name, $con = [])
 {
 
     try {
-        $url = 'Project/Org/' . $url . $name . '.class.php';
+        $url = DIR_URL . '/Project/Org/' . $url . $name . '.class.php';
 
         getErr('file_exists', $url, 'OrgLib is not found!!');
         include_once($url);
@@ -155,7 +157,9 @@ function P()
 //获取路径
 function U($controller = null, $method = null)
 {
-    $url = '/';
+    //引入区块
+    global $block;
+    return $url = '/' . $block . '/' . $controller . '/' . $method;
 }
 
 

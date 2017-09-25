@@ -1,12 +1,13 @@
-h3,p{
+h3{
     text-align: center;
 }
 .bg-white span{
     background: white;
 }
 .left-nav{
-    position: fixed !important;background: #7ADAFF;height: 100%;
-
+    position: fixed !important;
+    background: #7ADAFF;
+    height: 100%;
     padding:80px 0 0 0 !important;
 }
 .left-nav > ul > li > a{
@@ -41,4 +42,7 @@ h3{
 }
 .panel-body{
     min-height: 80px;
+}
+.txt-left{
+    text-align: left;
 }

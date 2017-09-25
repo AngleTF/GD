@@ -158,8 +158,10 @@ class indexController extends Controller
             echo $operation . '失败';
         }
     }
-    public function method(){
-        echo 123;
+    public function clearBlock()
+    {
+        $name = 'admin';
+
     }
 }
 

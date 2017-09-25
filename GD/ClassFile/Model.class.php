@@ -110,7 +110,7 @@ class Model
 
         $list = [];
         foreach ($arr as $key => $value) {
-            $list[] = $key . '=:' . $key;
+            $list[] = $key . '=' . '?';
         }
         $list = join(',', $list);
 
@@ -159,8 +159,9 @@ class Model
         if (is_array($where)) {
             $keys = array_keys($where);
             $values = [];
+
             foreach ($keys as $k => $v) {
-                $values[] = $v . '=:' . $v;
+                $values[] = $v . '=' . '?' ;
             }
             $v = join(" $pattern ", $values);
             $this -> sql .= ' where ' . $v;
