@@ -12,6 +12,7 @@ class testController extends Controller
 {
     public function ech()
     {
-        echo 123;
+        echo 'this is ech';
+        var_dump(G());
     }
 }

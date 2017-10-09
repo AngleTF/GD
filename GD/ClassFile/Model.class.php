@@ -151,7 +151,7 @@ class Model
             if ($this -> pattern === 'que') {
                 return $this;
             } elseif ($this -> pattern === 'up') {
-                return $this -> submit($this -> sql, $this -> upDate);
+                return $this -> submit($this -> sql, array_values($this -> upDate));
             }
             return $this -> submit($this -> sql);
         }
@@ -167,14 +167,14 @@ class Model
             $this -> sql .= ' where ' . $v;
 
             if ($this -> pattern === 'que') {
-                $this -> where = $where;
+                $this -> where = array_values($where);
                 return $this;
             } elseif ($this -> pattern === 'up') {
-                $where = array_merge($this -> upDate, $where);
-                $this -> upDate = null;
+                $where = array_merge(array_values($this -> upDate), array_values($where));
             }
-            //del 提交点
-            return $this -> submit($this -> sql, $where);
+            //del 直接提交点
+            var_dump($where);
+            return $this -> submit($this -> sql, array_values($where));
         }
         getErrInfo('where argument is not array or string');
         return false;
@@ -225,7 +225,6 @@ class Model
 
     private function submit($sql, $arr = null)
     {
-        //清除sql 语句
         $this -> stmt = $this -> pdo -> prepare($sql);
         $this -> stmt -> execute($arr);
         return $this -> stmt -> rowCount();

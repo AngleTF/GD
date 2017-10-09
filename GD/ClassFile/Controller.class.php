@@ -16,9 +16,20 @@ class Controller
     {
         global $smarty;
         $this->smarty = $smarty;
+        //将GET到的 i 解析
+        if (!empty($_GET['i'])) {
+            $arr = explode('/', $_GET['i']);
+            //name/tao/id/1
+            for ($i = 0; $i < count($arr); $i+=2) {
+                if (isset($arr[$i+1])) {
+                    G($arr[$i], $arr[$i+1]);
+                }
+            }
+            unset($_GET['i']);
+        }
     }
 
-    public function display($point)
+    public function display($point = null)
     {
         $this->smarty->display($point);
     }

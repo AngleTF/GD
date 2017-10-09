@@ -11,7 +11,7 @@ function imc($block, $control, $method)
 {
     $control = $control . 'Controller';
     try {
-        $url = DIR_URL . '/Project/' . $block.'/Controller/' . $control . '.class.php';
+        $url = DIR_URL . '/Project/' . $block . '/Controller/' . $control . '.class.php';
 
         getErr('file_exists', $url, 'Controller is not found!!');
         require_once($url);
@@ -39,7 +39,8 @@ function M($name)
 
     //文件名称
     $name = $name . 'Model';
-    $url = DIR_URL . "/Project/$block/Model" . $name . '.class.php';
+    $url = DIR_URL . "/Project/$block/Model/" . $name . '.class.php';
+
     try {
         getErr('file_exists', $url, 'modelFile is not found!!');
         require_once($url);
@@ -155,19 +156,51 @@ function P()
 }
 
 //获取路径
-function U($controller = null, $method = null)
+function U($url = null, $var = null)
 {
     //引入区块
     global $block;
-    return $url = '/' . $block . '/' . $controller . '/' . $method;
+    /*
+     * [
+     *      'id' => 1,
+     *      'name' => 'tao'
+     *
+     *  ]
+     *
+     * /id/1/name/tao
+     *
+     * */
+    if ($var && $url) {
+        $arr = [];
+        //name/tao/id/1
+        foreach ($var as $k => $v) {
+            $arr[] = $k;
+            $arr[] = $v;
+        }
+        $var = join('/', $arr);
+        return $url = 'http://' . $_SERVER['HTTP_HOST'] . '/' . $block . '/' . $url . '/' . $var;
+    }
+    if ($url) {
+        return $url = 'http://' . $_SERVER['HTTP_HOST'] . '/' . $block . '/' . $url;
+    }
 }
-
-
 
 
 //对 sql 语句进行 转义 防止SQL注入
 function replaceSql($sql)
 {
-    return $sql = str_replace("'", "\'", str_replace("\"", "\\\"", str_replace("\\", "\\\\", $sql)));
+    $replace = [
+        "'" => "\'",
+        "\"" => "\\\"",
+        "\\" => "\\\\"
+    ];
+
+    foreach ($replace as $k => $v) {
+        $sql = str_replace($k, $v, $sql);
+    }
+
+    return $sql;
+    // = str_replace("'", "\'", str_replace("\"", "\\\"", str_replace("\\", "\\\\", $sql)))
 }
+
 
